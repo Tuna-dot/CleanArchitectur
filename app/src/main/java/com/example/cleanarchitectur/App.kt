@@ -1,7 +1,22 @@
 package com.example.cleanarchitectur
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.cleanarchitectur.di.data.dataModule
+import com.example.cleanarchitectur.di.domain.domainModule
+import com.example.cleanarchitectur.di.presentation.presentetionModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
-@HiltAndroidApp
-class App : Application()
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@App)
+            modules(
+                dataModule,
+                domainModule,
+                presentetionModule
+            )
+        }
+    }
+}
