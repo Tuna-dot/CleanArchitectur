@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     // Hilt plugin
-    id("com.google.dagger.hilt.android")
 
     //KSP must be declared at the bottom of hilt
     // Ksp plugin
@@ -39,9 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    hilt {
-        enableAggregatingTask = true
-    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -52,13 +49,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    // Hilt
-    implementation(libs.hilt.android)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    ksp(libs.hilt.android.compiler)
+
+    implementation (libs.koin.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

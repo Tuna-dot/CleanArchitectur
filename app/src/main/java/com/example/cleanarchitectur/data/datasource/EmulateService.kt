@@ -1,9 +1,8 @@
 package com.example.cleanarchitectur.data.datasource
 
 import com.example.cleanarchitectur.data.model.CounterDto
-import javax.inject.Inject
 
-class EmulateService @Inject constructor() {
+class EmulateService  {
     private var count = 0
     private var isIncrement = false
 

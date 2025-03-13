@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.cleanarchitectur.databinding.FragmentHomeBinding
 import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModel()
+
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCounter()
         viewModel.counter.observe(viewLifecycleOwner) { counter ->
             binding.tvCounter.text = counter.count.toString()
         }
