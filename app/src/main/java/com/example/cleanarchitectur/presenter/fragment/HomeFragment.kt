@@ -1,6 +1,6 @@
 package com.example.cleanarchitectur.presenter.fragment
 
-import androidx.fragment.app.viewModels
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,8 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
-
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -29,17 +27,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.counter.observe(viewLifecycleOwner) { counter ->
-            binding.tvCounter.text = counter.count.toString()
+        binding.button.setOnClickListener {
+            val text = binding.edText.text.toString()
+            val apiKey = "7d6454ad-5149-4c51-b2f9-615b091e98da:fx"
+            if (text.isNotEmpty()) {
+                viewModel.translateText(apiKey, text,"ru") // Запрос на перевод
+            }
         }
 
-        binding.decrementButton.setOnClickListener {
-            viewModel.decrement()
+        // Подписка на результат перевода
+        viewModel.translation.observe(viewLifecycleOwner) { translation ->
+            binding.text.text = translation // Отображаем перевод
         }
 
-        binding.incrementButton.setOnClickListener {
-            viewModel.increment()
-
-        }
     }
+
+//    @SuppressLint("SetTextI18n")
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        viewModel.counter.observe(viewLifecycleOwner) { counter ->
+//            binding.tvCounter.text = counter.count.toString()
+//        }
+//
+//        binding.decrementButton.setOnClickListener {
+//            viewModel.decrement()
+//        }
+//
+//        binding.incrementButton.setOnClickListener {
+//            viewModel.increment()
+//
+//        }
+//    }
 }

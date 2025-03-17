@@ -1,6 +1,8 @@
 package com.example.cleanarchitectur.data.mapper
 
+import com.example.cleanarchitectur.data.model.ApiResponse
 import com.example.cleanarchitectur.data.model.CounterDto
+import com.example.cleanarchitectur.domain.model.ApiResponseEntity
 import com.example.cleanarchitectur.domain.model.CounterEntity
 import com.example.cleanarchitectur.domain.model.OperationType
 
