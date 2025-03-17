@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.CleanArchitectur" parent="Base.Theme.CleanArchitectur" />
+    <style name="Theme.CleanArchitecture" parent="Base.Theme.CleanArchitectur" />
 </resources>
