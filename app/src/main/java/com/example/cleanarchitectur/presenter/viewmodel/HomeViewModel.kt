@@ -18,7 +18,7 @@ class HomeViewModel (
     private val decrementUseCase: DecrementUseCase,
     private val getCountUseCase: GetCountUseCase,
     private val getTextUseCase: GetTextUseCase,
-    private val dispatcher: CoroutineDispatcher
+    private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _translation = MutableLiveData<String>()
@@ -28,7 +28,7 @@ class HomeViewModel (
     val counter: LiveData<CounterEntity> = _counter
 
     fun translateText(apiKey:String,text: String, targetLang: String) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(mainDispatcher) {
             try {
                 val translatedText = getTextUseCase.execute(apiKey, text, targetLang)
                 _translation.value = translatedText

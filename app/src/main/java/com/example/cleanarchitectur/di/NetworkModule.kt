@@ -5,7 +5,6 @@ import com.example.cleanarchitectur.data.datasource.network.ApiService
 import com.example.cleanarchitectur.data.repository.ApiRepositoryImpl
 import com.example.cleanarchitectur.domain.repository.ApiRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -22,12 +21,9 @@ val networkModule = module {
     single { provideJson() }
     single { provideRetrofit(okHttpClient = get(), jsonConverter = get()) }
     single { provideApiService(retrofit = get()) }
-    single<ApiRepository> { ApiRepositoryImpl(apiService = get()) }
+    single<ApiRepository> { ApiRepositoryImpl(apiService = get(), ioDispatcher = get()) }
+//    single { ApiService() }
 
-    single { Dispatchers.IO }
-    single { Dispatchers.Main }
-    single { Dispatchers.Default }
-    single { Dispatchers.Unconfined }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient, jsonConverter: Converter.Factory): Retrofit {
