@@ -9,6 +9,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -21,7 +22,7 @@ val networkModule = module {
     single { provideJson() }
     single { provideRetrofit(okHttpClient = get(), jsonConverter = get()) }
     single { provideApiService(retrofit = get()) }
-    single<ApiRepository> { ApiRepositoryImpl(apiService = get(), ioDispatcher = get()) }
+    single<ApiRepository> { ApiRepositoryImpl(apiService = get(), ioDispatcher = get(named("IO"))) }
 //    single { ApiService() }
 
 }
