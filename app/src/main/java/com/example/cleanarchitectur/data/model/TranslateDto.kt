@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ApiResponse(
+data class TranslateDto(
     @SerialName("translations")
     val translations: List<Translation?>? = null
 )

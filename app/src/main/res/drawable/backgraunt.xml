@@ -7,7 +7,7 @@
         android:endColor="#556BFF"
         android:startColor="#FF6B6B"
         android:type="linear" />
-    <corners android:radius="16dp" />
+    <corners android:radius="20dp" />
     <padding
         android:left="16dp"
         android:right="16dp" />
