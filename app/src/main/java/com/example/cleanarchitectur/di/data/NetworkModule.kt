@@ -1,4 +1,4 @@
-package com.example.cleanarchitectur.di
+package com.example.cleanarchitectur.di.data
 
 import com.example.cleanarchitectur.BuildConfig
 import com.example.cleanarchitectur.data.datasource.network.ApiService

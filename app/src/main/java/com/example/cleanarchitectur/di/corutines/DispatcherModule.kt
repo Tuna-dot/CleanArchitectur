@@ -1,4 +1,4 @@
-package com.example.cleanarchitectur.di
+package com.example.cleanarchitectur.di.corutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
