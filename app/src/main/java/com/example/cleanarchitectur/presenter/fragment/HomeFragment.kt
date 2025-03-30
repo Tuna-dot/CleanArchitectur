@@ -1,34 +1,33 @@
 package com.example.cleanarchitectur.presenter.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.cleanarchitectur.databinding.FragmentHomeBinding
+import com.example.cleanarchitectur.presenter.bases.fragment.BaseFragment
 import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel
-import kotlinx.coroutines.launch
+import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
-    private val viewModel: HomeViewModel by viewModel()
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, container, false)
     }
+
+    override val viewModel: HomeViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
-        observeViewModel()
     }
 
     private fun setupListeners() {
@@ -40,26 +39,4 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { state ->
-                if (state is HomeViewModel.UIState.Success) {
-                    showTranslation(state.data)
-                }
-            }
-        }
-    }
-
-    private fun showTranslation(text: String) {
-        // Показываем переведенный текст и скрываем ошибку
-        binding.text.visibility = View.VISIBLE
-        binding.text.text = text
-     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
-
