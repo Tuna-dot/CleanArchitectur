@@ -1,8 +1,6 @@
 package com.example.cleanarchitectur.data.datasource.network
 
 import com.example.cleanarchitectur.data.model.TranslateDto
-import kotlinx.coroutines.flow.Flow
-import okhttp3.Response
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query

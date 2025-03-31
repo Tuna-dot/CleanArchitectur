@@ -1,6 +1,5 @@
 package com.example.cleanarchitectur.presenter.viewmodel
 
-
 import com.example.cleanarchitectur.domain.networkusecase.GetTextUseCase
 import com.example.cleanarchitectur.presenter.bases.viewmodel.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
