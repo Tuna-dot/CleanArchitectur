@@ -2,7 +2,6 @@ package com.example.cleanarchitectur.presenter.bases.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel
 import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel.UIState
 import com.example.cleanarchitectur.utils.Either
 import kotlinx.coroutines.CoroutineDispatcher

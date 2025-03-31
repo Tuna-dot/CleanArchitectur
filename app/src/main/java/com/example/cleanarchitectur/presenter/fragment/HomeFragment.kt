@@ -1,18 +1,13 @@
 package com.example.cleanarchitectur.presenter.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.example.cleanarchitectur.databinding.FragmentHomeBinding
 import com.example.cleanarchitectur.presenter.bases.fragment.BaseFragment
 import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel
-import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
