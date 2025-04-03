@@ -9,7 +9,7 @@ val presentationModule = module {
     viewModel {
         HomeViewModel(
             getTextUseCase = get(),
-            mainDispatcher = get(named("Main"))
+
         )
     }
 }
