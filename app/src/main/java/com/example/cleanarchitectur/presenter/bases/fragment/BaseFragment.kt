@@ -1,68 +1,85 @@
 package com.example.cleanarchitectur.presenter.bases.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
-import com.example.cleanarchitectur.databinding.FragmentHomeBinding
-import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel
-import com.example.cleanarchitectur.presenter.viewmodel.HomeViewModel.UIState
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
+import com.example.cleanarchitectur.utils.UIState
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-abstract class BaseFragment<VB : FragmentHomeBinding, VM : HomeViewModel> : Fragment() {
+typealias Inflater<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-    // ViewBinding
-    protected lateinit var binding: VB
-    protected open val viewModel: HomeViewModel by viewModel()
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
+    private val inflate: Inflater<VB>
+) : Fragment() {
 
-    abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
+
+    protected inline fun <reified T : VM> vm(): Lazy<T> {
+        return viewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = inflateBinding(inflater, container)
+        _binding = inflate.invoke(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
+        setupUI()
+        setupListeners()
+        setupCollects()
+        setupRequests()
     }
 
-    // Наблюдение за состоянием ViewModel
-    private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.translateTextState.collect { state ->
-                when (state) {
-                    is UIState.Loading -> showLoading()
-                    is UIState.Success -> showContent(state.data)
-                    is UIState.Error -> showError(state.message)
-                    else -> {}
+    protected open fun setupUI(){}
+
+    protected open fun setupListeners(){}
+
+    protected open fun setupCollects(){
+
+    }
+
+    protected open fun setupRequests(){}
+
+    protected fun <T> StateFlow<UIState<T>>.collectState(
+        state: (UIState<T>) -> Unit,
+        onSuccess: (data: T) -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle( state = Lifecycle.State.STARTED) {
+                this@collectState.collect { uiState ->
+                    state(uiState)
+                    when (uiState) {
+                        is UIState.Success -> onSuccess(uiState.data)
+                        is UIState.Error -> showError(uiState.message)
+                        else -> {}
+                    }
                 }
             }
         }
     }
 
-    // Показать прогресс-бар
-    private fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    // Показать содержимое
-    private fun showContent(data: String) {
-        binding.progressBar.visibility = View.GONE
-        binding.text.text = data
-    }
-
     // Показать ошибку через Toast
     private fun showError(message: String) {
-        binding.progressBar.visibility = View.GONE
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        Log.e("ololo", "showError: $message ", )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

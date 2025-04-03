@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+
     //Live Data & View Model
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
