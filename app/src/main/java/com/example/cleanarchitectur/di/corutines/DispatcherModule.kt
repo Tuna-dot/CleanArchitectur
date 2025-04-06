@@ -7,7 +7,4 @@ import org.koin.dsl.module
 
 val dispatcherModule = module {
     single<CoroutineDispatcher>(named("IO")) { Dispatchers.IO }
-    single<CoroutineDispatcher>(named("Main")) { Dispatchers.Main }
-    single<CoroutineDispatcher> { Dispatchers.Default }
-    single<CoroutineDispatcher> { Dispatchers.Unconfined }
 }

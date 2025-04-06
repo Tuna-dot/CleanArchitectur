@@ -45,7 +45,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         setupRequests()
     }
 
-    protected open fun setupUI(){}
+    protected open fun setupUI(){
+
+    }
 
     protected open fun setupListeners(){}
 
@@ -55,7 +57,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     protected open fun setupRequests(){}
 
-    protected fun <T> StateFlow<UIState<T>>.collectState(
+    protected fun <T: Any> StateFlow<UIState<T>>.collectState(
         state: (UIState<T>) -> Unit,
         onSuccess: (data: T) -> Unit
     ) {
@@ -64,7 +66,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
                 this@collectState.collect { uiState ->
                     state(uiState)
                     when (uiState) {
-                        is UIState.Success -> onSuccess(uiState.data)
+                       is UIState.Success -> onSuccess(uiState.data)
                         is UIState.Error -> showError(uiState.message)
                         else -> {}
                     }

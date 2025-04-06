@@ -22,6 +22,11 @@ android {
 
     buildTypes {
         release {
+            buildConfigField(
+                "String",
+                "THE_RICK_AND_MORTY_API",
+                "\"https://rickandmortyapi.com/api/\""
+            )
             buildConfigField("String", "BASE_URL", "\"https://api-free.deepl.com/\"")
             isMinifyEnabled = false
             proguardFiles(
@@ -31,6 +36,11 @@ android {
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api-free.deepl.com/\"")
+            buildConfigField(
+                "String",
+                "THE_RICK_AND_MORTY_API",
+                "\"https://rickandmortyapi.com/api/\""
+            )
         }
     }
     compileOptions {
@@ -49,15 +59,21 @@ android {
 
 dependencies {
 
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    ksp("com.github.bumptech.glide:ksp:4.15.1")
+
+
     //Live Data & View Model
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
+
+    //navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    //Koin
     implementation(libs.koin.android)
 
     // Retrofit
@@ -65,6 +81,10 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    val paging_version = "3.3.6"
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
